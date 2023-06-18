@@ -28,8 +28,8 @@ app.post('/addData',async (req, res) => {
         console.log(item)
 
 
-        const saveData = await PRODUCT(item)
-        await saveData.save()
+        const saveData = await PRODUCT(item) //PRODUCT is a model. we cross check the form data with the model we created before saving it
+        await saveData.save()  // through this code we save the incoming data from front end to db 
         res.send((saveData))
 
 
