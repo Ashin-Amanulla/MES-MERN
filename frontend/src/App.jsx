@@ -1,60 +1,48 @@
-import React from 'react'
-import { useForm } from "react-hook-form";//react hook to collect data from form and club as json
-import { useState } from 'react';
+import React from "react";
 
+//react hook to collect data from form and club as json. We need to install this useForm through
+//"npm i --save react-hook-form in frontend folder"
+import { useForm } from "react-hook-form";
 
+import { useState } from "react";
 
 export default function App() {
+  const { register, handleSubmit } = useForm(); //useFrom
+  const [data, setData] = useState(""); // using state to create a variable named data that is initially a null string
 
-
-  const { register, handleSubmit } = useForm();
-  const [data, setData] = useState("");
- 
   const onSubmit = (data) => {
-    setData(data)
-    console.log(data)
-  }
-
+    //useForm submit function that collects data and store it in "data variable" create by useState above
+    setData(data); //setting varibale "data's" value to the form values
+    console.log(data); // consoling the form values , which is in json format
+  };
 
   return (
     <div>
+      <h1 className="text-center mt-3 ">
+        Data Insert from frontend to Mongodb through backend
+      </h1>
 
-      <h1 className='text-center mt-3 '>Data Insert from frontend to Mongodb through backend</h1>
-   
-      <form
-          onSubmit={handleSubmit(onSubmit)}
+
+{/* when form gets submitted a function "handleSubmit" gets activates to trigger "onSubmit" function */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="">Title</label>
+
+        {/* ...register ("field_name") means to collect the data/value inserted by the user through input field and register it in json */}
+        <input placeholder="Title" {...register("title")} /> 
+
+        <label htmlFor="">Price</label>
+        <input placeholder="Price" {...register("price")} />
+
+        <label htmlFor="">Image</label>
+        <input placeholder="Image" {...register("image")} />
+
+        <button
+          className=" flex justify-center p-2 rounded-md w-1/2 self-center bg-gray-900  text-white hover:bg-gray-800"
+          type="submit"
         >
-          <label htmlFor="">Title</label>
-          <input
-            placeholder="Title"
-            {...register("title")}
-          />
-
-
-<label htmlFor="">Price</label>
-          <input
-            placeholder="Price"
-            {...register("price")}
-          />
-
-
-<label htmlFor="">Image</label>
-          <input
-            placeholder="Image"
-            {...register("image")}
-          />
-
-          <button
-            className=" flex justify-center p-2 rounded-md w-1/2 self-center bg-gray-900  text-white hover:bg-gray-800"
-            type='submit'
-          >
-            <span>
-              Submit
-            </span>
-          </button>
-        </form>
-     
-   
+          <span>Submit</span>
+        </button>
+      </form>
     </div>
-  )
+  );
 }
