@@ -21,7 +21,9 @@ mongoose.connect("mongodb+srv://userone:userone@cluster0.vcc0q.mongodb.net/MES")
 
 const PRODUCT = require("./model/product")
 
-app.post('/addData',async (req, res) => {
+
+//CREATE
+app.post('/addData', async (req, res) => {
     try {
 
         let item = req.body
@@ -35,6 +37,59 @@ app.post('/addData',async (req, res) => {
 
     } catch (error) {
         res.send(error);
+    }
+})
+
+//READ
+
+app.get('/getData', async (req, res) => {
+    try {
+        console.log("reading data")
+        const data = await PRODUCT.find({}) //code that find all data from backend
+        res.send(data)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+
+// For deleteing and updating we are using "ids" of entry and then do the procedd
+
+//UPDATE
+
+
+app.put('/updateData/:id', async (req, res) => {
+    try {
+
+        let id = req.params.id
+        let updateData = { $set: req.body }
+    
+        const updated = await PRODUCT.findByIdAndUpdate(id, updateData)
+    
+        res.json(updated)
+        
+    }  catch (error) {
+        console.log(error)
+        res.send('error')
+    }
+
+})
+
+
+//DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        let id = req.params.id
+        console.log('id check', id)
+
+        const updated = await PRODUCT.findByIdAndDelete(id)
+
+        res.send("deleted successfully")
+
+    } catch (error) {
+        console.log(error)
+        res.send('error')
     }
 })
 
