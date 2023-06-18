@@ -78,7 +78,7 @@ app.put('/updateData/:id', async (req, res) => {
 
 
 //DELETE
-router.delete('/:id', async (req, res) => {
+app.delete('/:id', async (req, res) => {
     try {
         let id = req.params.id
         console.log('id check', id)
